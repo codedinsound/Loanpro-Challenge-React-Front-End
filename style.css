@@ -1,0 +1,51 @@
+body {
+  background: linear-gradient(-90deg, #c850c0, #4158d0);
+}
+
+.container {
+  background-color: #212121;
+  border-radius: 5px;
+}
+
+.row {
+  /* border: 1px solid red; */
+  color: #fff;
+}
+
+form {
+  background-color: #2b78ac;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.operations-btns {
+  width: 80%;
+  border-style: none;
+  background-color: #a0a0a0;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.operations-btns-submit {
+  border-style: none;
+  border-radius: 5px;
+  background-color: #f69906;
+}
+
+.screen {
+  background-color: #090909;
+  border-radius: 5px;
+  width: 95%;
+  font-family: 'Orbitron', sans-serif;
+  color: #00ff41;
+}
+
+/* Testing CSS  */
+.test-r {
+  background-color: red;
+}
+
+.test-c {
+  background-color: blue;
+}
