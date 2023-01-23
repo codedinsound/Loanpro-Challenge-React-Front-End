@@ -4,6 +4,19 @@ import './style.css';
 import RESCalculatorView from './Views/RESCalculatorView';
 
 export default function App() {
+
+  
+
+
+
+
+
+
+
+
+
+
+
   return <RESCalculatorView />;
 }
 
