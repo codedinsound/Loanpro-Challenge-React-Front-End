@@ -8,7 +8,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import { Login, RESCalculatorView } from './Views';
+import { Login, RESCalculatorView } from './views';
 
 import { lambdaURLS } from './config';
 import { useState } from 'react';
