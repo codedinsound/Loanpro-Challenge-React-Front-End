@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 
-import { lamdaURLS } from '../config';
+import { lambdaURLS } from '../config';
 
 const RESCalculatorView = () => {
   // User Balance
@@ -70,6 +70,8 @@ const RESCalculatorView = () => {
       newUserStatus.total = Math.sqrt(newUserStatus.balance);
       newOperationState.total = `${newUserStatus.total}`;
     }
+
+    console.log(operation);
 
     updateUserStatus(newUserStatus);
     updateCurrentOperation(newOperationState);
