@@ -8,7 +8,12 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import { Login, RESCalculatorView } from './views';
+import {
+  ArithmeticRecords,
+  Login,
+  PaginationView,
+  RESCalculatorView,
+} from './views';
 
 import { lambdaURLS } from './config';
 import { useState } from 'react';
@@ -68,7 +73,8 @@ export default function App() {
       <div className="container mt-5">
         <Router>
           <Routes>
-            <Route path="/" element={<Login loginHandler={loginHandler} />} />
+            <Route path="/" element={<PaginationView />} />
+            <Route path="/t" element={<Login loginHandler={loginHandler} />} />
 
             <Route
               path="/calculator"

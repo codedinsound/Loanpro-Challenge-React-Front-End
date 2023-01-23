@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { lambdaURLS } from '../config';
 
+// MARK: RES Calculator View
 const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
   console.log(userInfo);
   // User Balance
@@ -22,7 +23,7 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
     total: '',
   });
 
-  //   Handle Operation Button Pressed
+  // Handle Operation Button Pressed
   const handleOperationPressed = (e: any) => {
     const operation: string = e.target.id;
 
