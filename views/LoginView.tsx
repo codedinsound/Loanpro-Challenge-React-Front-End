@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Navigate, useNavigate } from 'react-router-dom';
 
-const Login = ({ loginHandler }) => {
+const LoginView = ({ loginHandler }) => {
   const navigate = useNavigate();
 
   const handleOnSubmitLogin = async (e) => {
@@ -61,4 +61,4 @@ const Login = ({ loginHandler }) => {
   );
 };
 
-export default Login;
+export default LoginView;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PaginationView = ({ recordsData }) => {
+const ArithmeticRecords = ({ recordsData }) => {
   const dummyTestData = [
     {
       id: 1,
@@ -42,4 +42,4 @@ const PaginationView = ({ recordsData }) => {
   );
 };
 
-export default PaginationView;
+export default ArithmeticRecords;
