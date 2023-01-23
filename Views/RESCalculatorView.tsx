@@ -1,8 +1,9 @@
 import * as React from 'react';
-
 import { useState } from 'react';
 
-const RESCalculatorView = (props) => {
+import { lamdaURLS } from '../config';
+
+const RESCalculatorView = () => {
   // User Balance
   const [userStatus, updateUserStatus] = useState({
     balance: 100,
