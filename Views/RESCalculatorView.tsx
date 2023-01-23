@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { lambdaURLS } from '../config';
 
-const RESCalculatorView = ({ userInfo }) => {
+const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
   console.log(userInfo);
   // User Balance
   const [userStatus, updateUserStatus] = useState({
@@ -27,7 +27,7 @@ const RESCalculatorView = ({ userInfo }) => {
     const operation: string = e.target.id;
 
     const newUserStatus = { ...userStatus };
-    const newOperationState = { ...currentOperation };
+    let newOperationState = { ...currentOperation };
 
     newUserStatus.cost = 2;
 
@@ -72,6 +72,16 @@ const RESCalculatorView = ({ userInfo }) => {
       newOperationState.total = `${newUserStatus.total}`;
     }
 
+    if (operation === 'RANDOM') {
+      newOperationState = {
+        operation: 'RANDOM',
+        symbol: '',
+        balance: '',
+        cost: '',
+        total: '',
+      };
+    }
+
     console.log(operation);
 
     updateUserStatus(newUserStatus);
@@ -102,6 +112,7 @@ const RESCalculatorView = ({ userInfo }) => {
   // Log Out of the Res Calculator
   const logOut = () => {
     console.log('Logging Out Clearing Session Token');
+    loggingOutHandler();
   };
 
   return (

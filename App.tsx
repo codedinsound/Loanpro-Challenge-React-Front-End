@@ -14,12 +14,9 @@ import { lambdaURLS } from './config';
 import { useState } from 'react';
 
 // MARK: Protect the routes
-const Protected = ({ children }) => {
-  console.log('infinit');
-  if (true) {
-    return <Navigate to="/" replace />;
-  }
-  return children;
+const Protected = ({ children, isSessionAlive }) => {
+  if (isSessionAlive) return children;
+  return <Navigate to="/" replace />;
 };
 
 export default function App() {
@@ -76,8 +73,11 @@ export default function App() {
             <Route
               path="/calculator"
               element={
-                <Protected>
-                  <RESCalculatorView userInfo={session} />
+                <Protected isSessionAlive={session.isSessionAlive}>
+                  <RESCalculatorView
+                    userInfo={session}
+                    loggingOutHandler={loggingOutHandler}
+                  />
                 </Protected>
               }
             />

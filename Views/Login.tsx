@@ -34,7 +34,7 @@ const Login = ({ loginHandler }) => {
         </div>
       </div>
       <div className="row d-flex">
-        <form className="w-50 mt-1 mx-auto" onSubmit={handleOnSubmitLogin}>
+        <form className="w-50 mt-1 mx-auto mb-3" onSubmit={handleOnSubmitLogin}>
           <div className="mb-3">
             <label className="form-label">Username: </label>
             <input
@@ -51,12 +51,11 @@ const Login = ({ loginHandler }) => {
               type="password"
               id="password"
               className="form-control"
-              defaultValue="7902a95978eac488ee86b560c2d9f17e82d3c66a86068c30fe488cc8e4edea0e"
+              defaultValue=""
             ></input>
           </div>
           <button className="btn btn-primary">Submit</button>
         </form>
-        <div className="row">.</div>
       </div>
     </div>
   );
