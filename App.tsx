@@ -4,20 +4,11 @@ import './style.css';
 import RESCalculatorView from './Views/RESCalculatorView';
 
 export default function App() {
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  return <RESCalculatorView />;
+  return (
+    <div className="container mt-5">
+      <RESCalculatorView />
+    </div>
+  );
 }
 
 // User Login Field
