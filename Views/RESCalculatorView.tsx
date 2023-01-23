@@ -3,13 +3,14 @@ import { useState } from 'react';
 
 import { lambdaURLS } from '../config';
 
-const RESCalculatorView = () => {
+const RESCalculatorView = ({ userInfo }) => {
+  console.log(userInfo);
   // User Balance
   const [userStatus, updateUserStatus] = useState({
-    balance: 100,
+    balance: userInfo.balance,
     cost: 0,
     total: 0,
-    userName: 'iamauser',
+    userName: userInfo.username,
   });
 
   // Operations State
