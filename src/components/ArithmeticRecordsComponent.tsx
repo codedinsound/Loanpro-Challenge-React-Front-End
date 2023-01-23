@@ -1,18 +1,9 @@
 import React from 'react';
 
-const ArithmeticRecords = ({ recordsData }) => {
-  const dummyTestData = [
-    {
-      id: 1,
-      dp2: 'data 2',
-      dp3: 'data 3',
-      dp4: 'data 4',
-    },
-  ];
-
-  let list = dummyTestData.map((record) => {
+const ArithmeticRecordsComponent = ({ recordsData }) => {
+  let list = recordsData.map((record) => {
     return (
-      <tr>
+      <tr key={record.id}>
         <td>{record.id}</td>
         <td>{record.dp2}</td>
         <td>{record.dp3}</td>
@@ -22,11 +13,7 @@ const ArithmeticRecords = ({ recordsData }) => {
   });
 
   return (
-    <div>
-      <div className="row">
-        <div></div>
-        <button className="">Back</button>
-      </div>
+    <div className="row">
       <table className="table table-dark">
         <thead>
           <tr>
@@ -42,4 +29,11 @@ const ArithmeticRecords = ({ recordsData }) => {
   );
 };
 
-export default ArithmeticRecords;
+export default ArithmeticRecordsComponent;
+
+{
+  /* <div className="row">
+<div></div>
+<button className="">Back</button>
+</div> */
+}
