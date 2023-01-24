@@ -5,7 +5,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  useNavigate,
+  BrowserRouter,
 } from 'react-router-dom';
 
 import {
@@ -15,16 +16,30 @@ import {
 } from './views';
 
 import { lambdaURLS } from './config';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // MARK: Protect the routes
-const Protected = ({ children, isSessionAlive }) => {
-  return isSessionAlive ? children : <Navigate to="/" replace />;
+const ProtectedRoute = ({ children, session }) => {
+  console.log(session);
+
+  const navigate = useNavigate();
+  const [navigating, setNavigating] = useState(false);
+
+  useEffect(() => {
+    if (!session.isSessionAlive && !navigating) {
+      setNavigating(true);
+      navigate('/', { replace: true });
+    }
+  }, [session.isSessionAlive, navigate, navigating]);
+
+  return session.isSessionAlive || navigating ? children : null;
 };
 
 export default function App() {
   // State
   const [session, updateSession] = useState({ isSessionAlive: false });
+
+  console.log(session);
 
   // MARK: Event Handlers
   // =======================================
@@ -32,32 +47,34 @@ export default function App() {
   const loginHandler = async (credentials): Promise<boolean> => {
     console.log('app', credentials);
 
-    // let body = JSON.stringify(credentials);
+    let body = JSON.stringify(credentials);
 
-    // let res = await fetch(lambdaURLS.authURL, {
-    //   method: 'POST',
-    //   body,
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
+    console.log(body);
 
-    // let json = await res.json();
+    let res = await fetch(lambdaURLS.authURL, {
+      method: 'POST',
+      body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-    // if (json.error) return false;
+    let json = await res.json();
 
-    const info = {
-      status: 'active',
-      date: '2023-01-23T06:28:40.894Z',
-      balance: 4060,
-      userID: 1,
-      username: 'luissantanderdev@gmail.com',
-      sessionToken: 'abc4',
-    };
+    if (json.error) return false;
+
+    // const info = {
+    //   status: 'active',
+    //   date: '2023-01-23T06:28:40.894Z',
+    //   balance: 100,
+    //   userID: 4,
+    //   username: 'abc@loanpro.com',
+    //   sessionToken: 'abc4',
+    // };
 
     updateSession({
       isSessionAlive: true,
-      ...info,
+      ...json,
     });
 
     return true;
@@ -71,7 +88,7 @@ export default function App() {
   return (
     <React.Fragment>
       <div className="container mt-5">
-        <Router>
+        <BrowserRouter>
           <Routes>
             <Route
               path="/"
@@ -81,24 +98,24 @@ export default function App() {
             <Route
               path="/calculator"
               element={
-                <Protected isSessionAlive={session.isSessionAlive}>
+                <ProtectedRoute session={session}>
                   <RESCalculatorView
                     userInfo={session}
                     loggingOutHandler={loggingOutHandler}
                   />
-                </Protected>
+                </ProtectedRoute>
               }
             />
             <Route
               path="/records"
               element={
-                <Protected isSessionAlive={session.isSessionAlive}>
+                <ProtectedRoute session={session}>
                   <UserArithmeticRecordsView />
-                </Protected>
+                </ProtectedRoute>
               }
             />
           </Routes>
-        </Router>
+        </BrowserRouter>
       </div>
     </React.Fragment>
   );

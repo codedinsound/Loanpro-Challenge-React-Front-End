@@ -1,4 +1,5 @@
 import * as React from 'react';
+import sha256 from 'crypto-js/sha256';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -8,9 +9,18 @@ const LoginView = ({ loginHandler }) => {
   const handleOnSubmitLogin = async (e) => {
     e.preventDefault();
 
+    console.log(e.target.password.value);
+
+    let protectedPassword = '';
+
+    if (e.target.password.value != '')
+      protectedPassword = sha256(e.target.password.value).toString();
+
+    console.log(protectedPassword);
+
     const credentials = {
       u: e.target.email.value,
-      p: e.target.password.value,
+      p: protectedPassword,
     };
 
     console.log(credentials);
@@ -36,22 +46,22 @@ const LoginView = ({ loginHandler }) => {
       <div className="row d-flex">
         <form className="w-50 mt-1 mx-auto mb-3" onSubmit={handleOnSubmitLogin}>
           <div className="mb-3">
-            <label className="form-label">Username: </label>
+            <label className="form-label">Email: </label>
             <input
               type="email"
               id="email"
               className="form-control"
-              defaultValue="luissantanderdev@gmail.com"
+              defaultValue=""
+              placeholder="enter email..."
             ></input>
           </div>
-          s
           <div className="mb-3">
             <label className="form-label">Password: </label>
             <input
               type="password"
               id="password"
               className="form-control"
-              defaultValue=""
+              placeholder="enter password..."
             ></input>
           </div>
           <button className="btn btn-primary">Submit</button>
