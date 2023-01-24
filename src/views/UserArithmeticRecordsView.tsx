@@ -59,16 +59,24 @@ const UserArithmeticRecordsView = () => {
     ]);
   }, []);
 
+  const lastRecordIndex = (currentPage + 1) * recordsPerPage;
+  const firstRecordIndex = lastRecordIndex - recordsPerPage;
+  const nPages = Math.ceil(recordsData.length / recordsPerPage);
+
+  if (searchTypeToggle === 'btn-all') {
+    currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
+  }
+
   // Events Handlers
   // =========================================
   // Detect toggle function
-  const detectToggle = (e: any) => {
+  const detectToggleHandler = (e: any) => {
     const choice = e.target.value;
     return searchTypeToggle !== choice ? setSearchTypeToggle(choice) : '';
   };
 
   // Detect search queries
-  const detectSearchAndUpdate = (e: any) => {
+  const detectSearchAndUpdateHandler = (e: any) => {
     const searchQuery = e.target.value;
     const pattern = new RegExp(`^${searchQuery}`);
 
@@ -79,15 +87,7 @@ const UserArithmeticRecordsView = () => {
     updateCurrentRecordsDisplay(newCurrentRecords.slice(0, 5));
   };
 
-  const lastRecordIndex = (currentPage + 1) * recordsPerPage;
-  const firstRecordIndex = lastRecordIndex - recordsPerPage;
-  // const currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
-  const nPages = Math.ceil(recordsData.length / recordsPerPage);
-
-  if (searchTypeToggle === 'btn-all') {
-    currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
-  }
-
+  // Type of search field
   const searchField =
     searchTypeToggle === 'btn-all' ? (
       <PaginationComponent
@@ -99,7 +99,7 @@ const UserArithmeticRecordsView = () => {
       <div className="row text-center">
         <div className="col mb-3">
           <input
-            onChange={detectSearchAndUpdate}
+            onChange={detectSearchAndUpdateHandler}
             type="text"
             placeholder="record search..."
           />
@@ -121,16 +121,20 @@ const UserArithmeticRecordsView = () => {
       <div className="row text-center">
         <div className="col">
           <button
-            className="btn btn-sm btn-primary mx-1"
+            className={`btn btn-sm mx-1 ${
+              searchTypeToggle === 'btn-all' ? 'btn-primary' : 'btn-secondary'
+            }`}
             value="btn-all"
-            onClick={detectToggle}
+            onClick={detectToggleHandler}
           >
             All
           </button>
           <button
-            className="btn btn-sm btn-secondary mx-1"
+            className={`btn btn-sm mx-1 ${
+              searchTypeToggle === 'btn-all' ? 'btn-secondary' : 'btn-primary'
+            }`}
             value="btn-search"
-            onClick={detectToggle}
+            onClick={detectToggleHandler}
           >
             Search
           </button>
