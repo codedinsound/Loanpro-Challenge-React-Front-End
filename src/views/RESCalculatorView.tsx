@@ -115,6 +115,10 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
     loggingOutHandler();
   };
 
+  const navigateToArithmeticRecords = () => {
+    console.log('Submitting');
+  };
+
   return (
     <div className="container mt-5">
       <div className="row">
@@ -130,7 +134,14 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
       <div className="row mt-3">
         <div className="col dis">
           <div className="row">Balance: {userStatus.balance}</div>
-          <div className="row">Recent Operations</div>
+          <div className="row mt-3">
+            <button
+              className="btn btn-sm btn-primary w-75"
+              onClick={navigateToArithmeticRecords}
+            >
+              Arithmetic Records
+            </button>
+          </div>
         </div>
         <div className="col">
           <div className="row text-end screen">

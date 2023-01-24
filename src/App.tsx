@@ -109,10 +109,19 @@ export default function App() {
           <Routes>
             <Route
               path="/"
+              element={
+                <RESCalculatorView
+                  userInfo={session}
+                  loggingOutHandler={loggingOutHandler}
+                />
+              }
+            />
+            <Route
+              path="/t"
               element={<LoginView loginHandler={loginHandler} />}
             />
 
-            <Route
+            {/* <Route
               path="/calculator"
               element={
                 <ProtectedRoute session={session}>
@@ -122,15 +131,15 @@ export default function App() {
                   />
                 </ProtectedRoute>
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/records"
               element={
                 <ProtectedRoute session={session}>
                   <UserArithmeticRecordsView />
                 </ProtectedRoute>
               }
-            />
+            /> */}
           </Routes>
         </BrowserRouter>
       </div>
