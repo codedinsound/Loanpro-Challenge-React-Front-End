@@ -61,6 +61,12 @@ const UserArithmeticRecordsView = () => {
 
   return (
     <div className="container mt-5">
+      <div className="row">
+        <div className="col"></div>
+        <div className="col-auto ml-auto">
+          <button className="btn btn-sm btn-danger mt-1">Back</button>
+        </div>
+      </div>
       <div className="row text-center">
         <h3 className="mt-2">Arithmetic Records</h3>
       </div>

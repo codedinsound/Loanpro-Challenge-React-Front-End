@@ -31,7 +31,7 @@ const PaginationComponent = ({ nPages, currentPage, setCurrentPage }) => {
   });
 
   return (
-    <nav>
+    <nav className="row">
       <ul className="pagination justify-content-center">
         <li className="page-item">
           <button className="page-link" onClick={prevPageHandler}>
