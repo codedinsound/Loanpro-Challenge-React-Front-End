@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const LoginView = ({ loginHandler }) => {
   const navigate = useNavigate();
 
-  const handleOnSubmitLogin = async (e) => {
+  const handleOnSubmitLogin = async (e: any): Promise<void> => {
     e.preventDefault();
 
     console.log(e.target.password.value);
