@@ -6,7 +6,10 @@ const PaginationComponent = ({ nPages, currentPage, setCurrentPage }) => {
   // Set Page Numbers
   let numbers = pageNumbers.map((pgNumber) => {
     return (
-      <li className={`page-item ${currentPage === pgNumber ? 'active' : ''} `}>
+      <li
+        key={pgNumber}
+        className={`page-item ${currentPage === pgNumber ? 'active' : ''}`}
+      >
         <button
           className="page-link"
           onClick={() => {

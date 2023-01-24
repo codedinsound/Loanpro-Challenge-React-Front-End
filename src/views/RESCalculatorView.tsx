@@ -24,7 +24,6 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
 
   // Event Handlers
   // ================================================
-
   // Handle Operation Button Pressed
   const handleOperationPressed = (e: any) => {
     const operation: string = e.target.id;
@@ -96,16 +95,13 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
 
     let body = JSON.stringify({});
 
-    let res = await fetch(
-      'https://g0eq2tenb2.execute-api.us-west-1.amazonaws.com/Master-Stage/loanpro-challenge-aws-lambda-backend-dev-authenticate',
-      {
-        method: 'POST',
-        body,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    let res = await fetch(lambdaURLS.processURL, {
+      method: 'POST',
+      body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     let json = await res.json();
 

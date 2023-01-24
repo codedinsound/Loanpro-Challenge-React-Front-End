@@ -19,14 +19,16 @@ import { useState } from 'react';
 
 // MARK: Protect the routes
 const Protected = ({ children, isSessionAlive }) => {
-  if (isSessionAlive) return children;
-  return <Navigate to="/" replace />;
+  return isSessionAlive ? children : <Navigate to="/" replace />;
 };
 
 export default function App() {
+  // State
   const [session, updateSession] = useState({ isSessionAlive: false });
 
-  // MARK: Handle Authentication with Amazon AWS
+  // MARK: Event Handlers
+  // =======================================
+  // Handle Authentication with Amazon AWS
   const loginHandler = async (credentials): Promise<boolean> => {
     console.log('app', credentials);
 
@@ -58,11 +60,10 @@ export default function App() {
       ...info,
     });
 
-    console.log(session);
-
     return true;
   };
 
+  // Handle Logging Out
   const loggingOutHandler = () => {
     updateSession({ isSessionAlive: false });
   };
@@ -72,8 +73,10 @@ export default function App() {
       <div className="container mt-5">
         <Router>
           <Routes>
-            <Route path="/" element={<UserArithmeticRecordsView />} />
-            {/* <Route path="/t" element={<Login loginHandler={loginHandler} />} /> */}
+            <Route
+              path="/"
+              element={<LoginView loginHandler={loginHandler} />}
+            />
 
             <Route
               path="/calculator"
@@ -83,6 +86,14 @@ export default function App() {
                     userInfo={session}
                     loggingOutHandler={loggingOutHandler}
                   />
+                </Protected>
+              }
+            />
+            <Route
+              path="/records"
+              element={
+                <Protected isSessionAlive={session.isSessionAlive}>
+                  <UserArithmeticRecordsView />
                 </Protected>
               }
             />

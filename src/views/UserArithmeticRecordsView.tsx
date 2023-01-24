@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 import { ArithmeticRecordsComponent, PaginationComponent } from '../components';
+import { useNavigate } from 'react-router-dom';
 
 // MARK: User Arithmetic Records
 const UserArithmeticRecordsView = () => {
@@ -10,10 +11,9 @@ const UserArithmeticRecordsView = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [recordsPerPage] = useState(2);
   const [searchTypeToggle, setSearchTypeToggle] = useState('btn-all');
-
   let [currentRecords, updateCurrentRecordsDisplay] = useState([]);
 
-  // Toggle All and Search Field
+  const navigate = useNavigate();
 
   // Get Records from AWS Lambda
   useEffect(() => {
@@ -87,6 +87,11 @@ const UserArithmeticRecordsView = () => {
     updateCurrentRecordsDisplay(newCurrentRecords.slice(0, 5));
   };
 
+  // Goes back to the RES Calculator View
+  const goBackToCalculatorView = () => {
+    navigate('/calculator');
+  };
+
   // Type of search field
   const searchField =
     searchTypeToggle === 'btn-all' ? (
@@ -112,7 +117,12 @@ const UserArithmeticRecordsView = () => {
       <div className="row">
         <div className="col"></div>
         <div className="col-auto ml-auto">
-          <button className="btn btn-sm btn-danger mt-1">Back</button>
+          <button
+            className="btn btn-sm btn-danger mt-1"
+            onClick={goBackToCalculatorView}
+          >
+            Back
+          </button>
         </div>
       </div>
       <div className="row text-center">
