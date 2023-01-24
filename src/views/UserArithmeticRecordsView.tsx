@@ -5,10 +5,17 @@ import { ArithmeticRecordsComponent, PaginationComponent } from '../components';
 
 // MARK: User Arithmetic Records
 const UserArithmeticRecordsView = () => {
+  // Record States
   const [recordsData, setRecordsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [recordsPerPage] = useState(2);
+  const [searchTypeToggle, setSearchTypeToggle] = useState('btn-all');
 
+  let [currentRecords, updateCurrentRecordsDisplay] = useState([]);
+
+  // Toggle All and Search Field
+
+  // Get Records from AWS Lambda
   useEffect(() => {
     console.log('effect loading after component rendered');
 
@@ -21,7 +28,7 @@ const UserArithmeticRecordsView = () => {
       },
       {
         id: 2,
-        dp2: 'data 2',
+        dp2: 'data x',
         dp3: 'data 3',
         dp4: 'data 4',
       },
@@ -52,12 +59,55 @@ const UserArithmeticRecordsView = () => {
     ]);
   }, []);
 
+  // Events Handlers
+  // =========================================
+  // Detect toggle function
+  const detectToggle = (e: any) => {
+    const choice = e.target.value;
+    return searchTypeToggle !== choice ? setSearchTypeToggle(choice) : '';
+  };
+
+  // Detect search queries
+  const detectSearchAndUpdate = (e: any) => {
+    const searchQuery = e.target.value;
+    const pattern = new RegExp(`^${searchQuery}`);
+
+    let newCurrentRecords = recordsData.filter((record) => {
+      return pattern.test(record.dp2);
+    });
+
+    updateCurrentRecordsDisplay(newCurrentRecords.slice(0, 2));
+  };
+
   const lastRecordIndex = (currentPage + 1) * recordsPerPage;
   const firstRecordIndex = lastRecordIndex - recordsPerPage;
-  const currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
+  // const currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
   const nPages = Math.ceil(recordsData.length / recordsPerPage);
 
+  if (searchTypeToggle === 'btn-all') {
+    currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
+  }
+
   console.log('60:', nPages);
+
+  const searchField =
+    searchTypeToggle === 'btn-all' ? (
+      <PaginationComponent
+        nPages={nPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+    ) : (
+      <div className="row text-center">
+        <div className="col mb-3">
+          <input
+            onChange={detectSearchAndUpdate}
+            type="text"
+            placeholder="record search..."
+          />
+        </div>
+      </div>
+    );
 
   return (
     <div className="container mt-5">
@@ -70,12 +120,26 @@ const UserArithmeticRecordsView = () => {
       <div className="row text-center">
         <h3 className="mt-2">Arithmetic Records</h3>
       </div>
+      <div className="row text-center">
+        <div className="col">
+          <button
+            className="btn btn-sm btn-primary mx-1"
+            value="btn-all"
+            onClick={detectToggle}
+          >
+            All
+          </button>
+          <button
+            className="btn btn-sm btn-secondary mx-1"
+            value="btn-search"
+            onClick={detectToggle}
+          >
+            Search
+          </button>
+        </div>
+      </div>
       <ArithmeticRecordsComponent recordsData={currentRecords} />
-      <PaginationComponent
-        nPages={nPages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      {searchField}
     </div>
   );
 };
