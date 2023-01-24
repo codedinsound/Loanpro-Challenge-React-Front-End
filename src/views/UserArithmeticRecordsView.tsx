@@ -6,7 +6,7 @@ import { ArithmeticRecordsComponent, PaginationComponent } from '../components';
 // MARK: User Arithmetic Records
 const UserArithmeticRecordsView = () => {
   const [recordsData, setRecordsData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [recordsPerPage] = useState(2);
 
   useEffect(() => {
@@ -15,9 +15,9 @@ const UserArithmeticRecordsView = () => {
     setRecordsData([
       {
         id: 1,
-        dp2: 'data 2',
-        dp3: 'data 3',
-        dp4: 'data 4',
+        dp2: 'test 1',
+        dp3: 'test 1',
+        dp4: 'test 1',
       },
       {
         id: 2,
@@ -52,10 +52,12 @@ const UserArithmeticRecordsView = () => {
     ]);
   }, []);
 
-  const lastRecordIndex = currentPage * recordsPerPage;
+  const lastRecordIndex = (currentPage + 1) * recordsPerPage;
   const firstRecordIndex = lastRecordIndex - recordsPerPage;
   const currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
   const nPages = Math.ceil(recordsData.length / recordsPerPage);
+
+  console.log('60:', nPages);
 
   return (
     <div className="container mt-5">
@@ -64,7 +66,7 @@ const UserArithmeticRecordsView = () => {
       </div>
       <ArithmeticRecordsComponent recordsData={currentRecords} />
       <PaginationComponent
-        nPages={0}
+        nPages={nPages}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
