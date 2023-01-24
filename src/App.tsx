@@ -45,7 +45,8 @@ export default function App() {
   // MARK: Event Handlers
   // =======================================
   // Handle Authentication with Amazon AWS
-  const loginHandler = async (credentials): Promise<boolean> => {
+  const loginHandler = async (credentials): any => {
+    let user = {}; 
     console.log('app', credentials);
 
     let body = JSON.stringify(credentials);
@@ -62,7 +63,21 @@ export default function App() {
 
     let json = await res.json();
 
-    if (json.error) return false;
+    interface ErrorMessage {
+        error: string
+    }
+
+    console.log(json);
+
+
+    if (json.error) {
+
+        user = {
+          ...json
+        }
+
+        return user; 
+    }
 
     // const info = {
     //   status: 'active',
@@ -72,13 +87,15 @@ export default function App() {
     //   username: 'abc@loanpro.com',
     //   sessionToken: 'abc4',
     // };
+    user = {
+      isSessionAlive: true, 
+      ...json 
+    }
 
-    updateSession({
-      isSessionAlive: true,
-      ...json,
-    });
 
-    return true;
+    updateSession({isSessionAlive: true});
+
+    return user;
   };
 
   // Handle Logging Out

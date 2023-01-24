@@ -1,10 +1,24 @@
 import * as React from 'react';
 import sha256 from 'crypto-js/sha256';
 
+import { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 
 const LoginView = ({ loginHandler }) => {
+  // State 
+  // ========================
+  const [isInvalidLogin, isInvalidUpdate] = useState(false); 
+
   const navigate = useNavigate();
+
+  console.log(isInvalidLogin);
+
+  // Event Handlers 
+  // =========================
+  const detectInputChange = () => {
+      if (isInvalidLogin) 
+        isInvalidUpdate(false); 
+  }
 
   const handleOnSubmitLogin = async (e: any): Promise<void> => {
     e.preventDefault();
@@ -16,12 +30,20 @@ const LoginView = ({ loginHandler }) => {
 
     console.log(protectedPassword);
 
-    const credentials = {
+    interface Credentials {
+        u: string, 
+        p: string
+    }
+
+    const credentials: Credentials = {
       u: e.target.email.value,
       p: protectedPassword,
     };
 
     let canNavigate: boolean = await loginHandler(credentials);
+
+    isInvalidUpdate(true);
+
 
     if (canNavigate) {
       navigate('/calculator');
@@ -29,6 +51,12 @@ const LoginView = ({ loginHandler }) => {
       navigate('/');
     }
   };
+
+  let errorMessage: any; 
+  if (isInvalidLogin) {
+      errorMessage = <div>{"Invalid Login"}</div>;
+  }
+
 
   return (
     <div className="container mt-5">
@@ -47,6 +75,7 @@ const LoginView = ({ loginHandler }) => {
               className="form-control"
               defaultValue=""
               placeholder="enter email..."
+              onChange={detectInputChange}
             ></input>
           </div>
           <div className="mb-3">
@@ -56,8 +85,10 @@ const LoginView = ({ loginHandler }) => {
               id="password"
               className="form-control"
               placeholder="enter password..."
+              onChange={detectInputChange}
             ></input>
           </div>
+          {errorMessage}
           <button className="btn btn-primary">Submit</button>
         </form>
       </div>
