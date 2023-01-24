@@ -2,7 +2,6 @@ import * as React from 'react';
 import './css/style.css';
 
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   useNavigate,
@@ -21,8 +20,6 @@ import { useState, useEffect } from 'react';
 
 // MARK: Protect the routes
 const ProtectedRoute = ({ children, session }) => {
-  console.log(session);
-
   const navigate = useNavigate();
   const [navigating, setNavigating] = useState(false);
 
@@ -38,64 +35,65 @@ const ProtectedRoute = ({ children, session }) => {
 
 export default function App() {
   // State
-  const [session, updateSession] = useState({ isSessionAlive: false });
-
-  console.log(session);
+  const [session, updateSession] = useState({});
 
   // MARK: Event Handlers
   // =======================================
   // Handle Authentication with Amazon AWS
-  const loginHandler = async (credentials): any => {
-    let user = {}; 
-    console.log('app', credentials);
-
+  const loginHandler = async (credentials): Promise<any> => {
+    let awsResponse = {};
     let body = JSON.stringify(credentials);
 
-    console.log(body);
+    // let res = await fetch(lambdaURLS.authURL, {
+    //   method: 'POST',
+    //   body,
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
 
-    let res = await fetch(lambdaURLS.authURL, {
-      method: 'POST',
-      body,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    // let json = await res.json();
 
-    let json = await res.json();
+    // interface ErrorMessage {
+    //   error: string;
+    // }
 
-    interface ErrorMessage {
-        error: string
-    }
+    // console.log(json);
 
-    console.log(json);
+    // if (json.error) {
+    //   awsReponse = {
+    //     isSessionAlive: false,
+    //     ...json,
+    //   };
 
+    //   return awsReponse;
+    // }
 
-    if (json.error) {
+    console.log(72, body);
 
-        user = {
-          ...json
-        }
+    const info = {
+      isSessionAlive: true,
+      status: 'active',
+      date: '2023-01-23T06:28:40.894Z',
+      balance: 100,
+      userID: 4,
+      username: 'abc@loanpro.com',
+      sessionToken: 'abc4',
+    };
 
-        return user; 
-    }
-
-    // const info = {
-    //   status: 'active',
-    //   date: '2023-01-23T06:28:40.894Z',
-    //   balance: 100,
-    //   userID: 4,
-    //   username: 'abc@loanpro.com',
-    //   sessionToken: 'abc4',
+    // awsReponse = {
+    //   isSessionAlive: true,
+    //   ...json,
     // };
-    user = {
-      isSessionAlive: true, 
-      ...json 
-    }
 
+    awsResponse = {
+      isSessionAlive: true,
+      ...info,
+    };
 
-    updateSession({isSessionAlive: true});
+    updateSession(awsResponse);
 
-    return user;
+    return awsResponse;
   };
 
   // Handle Logging Out

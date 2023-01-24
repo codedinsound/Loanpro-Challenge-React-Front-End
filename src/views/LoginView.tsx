@@ -1,29 +1,31 @@
 import * as React from 'react';
 import sha256 from 'crypto-js/sha256';
 
-import { useState } from 'react'; 
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginView = ({ loginHandler }) => {
-  // State 
+  // State
   // ========================
-  const [isInvalidLogin, isInvalidUpdate] = useState(false); 
+  const [isInvalidLogin, isInvalidUpdate] = useState({
+    invalid: false,
+    msg: '',
+  });
 
   const navigate = useNavigate();
 
   console.log(isInvalidLogin);
 
-  // Event Handlers 
+  // Event Handlers
   // =========================
   const detectInputChange = () => {
-      if (isInvalidLogin) 
-        isInvalidUpdate(false); 
-  }
+    if (isInvalidLogin) isInvalidUpdate({ invalid: false, msg: '' });
+  };
 
   const handleOnSubmitLogin = async (e: any): Promise<void> => {
     e.preventDefault();
 
-    let protectedPassword = '';
+    let protectedPassword: string = '';
 
     if (e.target.password.value != '')
       protectedPassword = sha256(e.target.password.value).toString();
@@ -31,8 +33,8 @@ const LoginView = ({ loginHandler }) => {
     console.log(protectedPassword);
 
     interface Credentials {
-        u: string, 
-        p: string
+      u: string;
+      p: string;
     }
 
     const credentials: Credentials = {
@@ -40,23 +42,28 @@ const LoginView = ({ loginHandler }) => {
       p: protectedPassword,
     };
 
-    let canNavigate: boolean = await loginHandler(credentials);
+    let canNavigate: any = await loginHandler(credentials);
 
-    isInvalidUpdate(true);
+    console.log('handleSubmitLogin: 47', canNavigate);
 
+    if (!canNavigate.invalid) {
+      isInvalidUpdate({
+        invalid: true,
+        msg: canNavigate.error,
+      });
+    }
 
-    if (canNavigate) {
+    if (canNavigate.isSessionAlive) {
       navigate('/calculator');
     } else {
       navigate('/');
     }
   };
 
-  let errorMessage: any; 
-  if (isInvalidLogin) {
-      errorMessage = <div>{"Invalid Login"}</div>;
+  let errorMessage: any;
+  if (isInvalidLogin.invalid) {
+    errorMessage = <div>{isInvalidLogin.msg}</div>;
   }
-
 
   return (
     <div className="container mt-5">

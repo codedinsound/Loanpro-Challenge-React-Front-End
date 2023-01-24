@@ -90,6 +90,7 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
     updateCurrentOperation(newOperationState);
   };
 
+  // Submit to Lambda
   const handleSubmitOperationToLambda = async () => {
     console.log('Submitting to Amazon AWS');
 
