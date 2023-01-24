@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
   useNavigate,
+  Navigate,
   BrowserRouter,
 } from 'react-router-dom';
 
@@ -83,6 +84,7 @@ export default function App() {
   // Handle Logging Out
   const loggingOutHandler = () => {
     updateSession({ isSessionAlive: false });
+    <Navigate to="/" replace />;
   };
 
   return (

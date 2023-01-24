@@ -9,8 +9,6 @@ const LoginView = ({ loginHandler }) => {
   const handleOnSubmitLogin = async (e: any): Promise<void> => {
     e.preventDefault();
 
-    console.log(e.target.password.value);
-
     let protectedPassword = '';
 
     if (e.target.password.value != '')
@@ -23,11 +21,7 @@ const LoginView = ({ loginHandler }) => {
       p: protectedPassword,
     };
 
-    console.log(credentials);
-
     let canNavigate: boolean = await loginHandler(credentials);
-
-    console.log(canNavigate);
 
     if (canNavigate) {
       navigate('/calculator');
