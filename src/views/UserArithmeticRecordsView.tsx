@@ -76,7 +76,7 @@ const UserArithmeticRecordsView = () => {
       return pattern.test(record.dp2);
     });
 
-    updateCurrentRecordsDisplay(newCurrentRecords.slice(0, 2));
+    updateCurrentRecordsDisplay(newCurrentRecords.slice(0, 5));
   };
 
   const lastRecordIndex = (currentPage + 1) * recordsPerPage;
@@ -87,8 +87,6 @@ const UserArithmeticRecordsView = () => {
   if (searchTypeToggle === 'btn-all') {
     currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
   }
-
-  console.log('60:', nPages);
 
   const searchField =
     searchTypeToggle === 'btn-all' ? (

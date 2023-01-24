@@ -5,7 +5,6 @@ import { lambdaURLS } from '../config';
 
 // MARK: RES Calculator View
 const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
-  console.log(userInfo);
   // User Balance
   const [userStatus, updateUserStatus] = useState({
     balance: userInfo.balance,
@@ -22,6 +21,9 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
     cost: '',
     total: '',
   });
+
+  // Event Handlers
+  // ================================================
 
   // Handle Operation Button Pressed
   const handleOperationPressed = (e: any) => {

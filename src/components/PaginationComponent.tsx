@@ -3,19 +3,8 @@ import React from 'react';
 const PaginationComponent = ({ nPages, currentPage, setCurrentPage }) => {
   const pageNumbers = [...Array(nPages + 1).keys()].slice(0);
 
-  // Set the next page handler
-  const nextPageHandler = () => {
-    if (currentPage !== nPages) setCurrentPage(currentPage + 1);
-  };
-
-  // Set the previous page
-  const prevPageHandler = () => {
-    if (currentPage !== 0) setCurrentPage(currentPage - 1);
-  };
-
+  // Set Page Numbers
   let numbers = pageNumbers.map((pgNumber) => {
-    console.log('insde map', currentPage, pgNumber);
-
     return (
       <li className={`page-item ${currentPage === pgNumber ? 'active' : ''} `}>
         <button
@@ -29,6 +18,18 @@ const PaginationComponent = ({ nPages, currentPage, setCurrentPage }) => {
       </li>
     );
   });
+
+  // Event Handlers
+  // ===================================
+  // Set the next page handler
+  const nextPageHandler = () => {
+    if (currentPage !== nPages) setCurrentPage(currentPage + 1);
+  };
+
+  // Set the previous page
+  const prevPageHandler = () => {
+    if (currentPage !== 0) setCurrentPage(currentPage - 1);
+  };
 
   return (
     <nav className="row">
