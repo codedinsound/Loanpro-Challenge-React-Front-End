@@ -56,7 +56,6 @@ const LoginView = ({ loginHandler }) => {
 
   let errorMessage: any;
   if (isInvalidLogin.invalid) {
-    console.log(isInvalidLogin);
     errorMessage = <div>{isInvalidLogin.error}</div>;
   }
 

@@ -11,9 +11,13 @@ Multiplication
 Division
 Square Root
 
-# Test Calculator use this account
+# To See the Backend AWS Logic
 
-Username: abc@loanpro.com
-Password: 123456Ahello
+"For more information, see the repository. https://github.com/codedinsound/Loanpro-Challenge-AWS-Lambda-Backend"
+
+# Test RESful AWS Lambda Calculator use this account
+
+Username: codedinsound@loanpro.com
+Password: 123456@hello
 
 [Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-ts-wjmen9)

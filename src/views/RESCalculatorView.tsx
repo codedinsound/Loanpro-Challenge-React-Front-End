@@ -101,17 +101,11 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
 
   // Submit to Lambda
   const handleSubmitOperationToLambda = async () => {
-    console.log('Submitting to Amazon AWS');
-
-    console.log(session, currentOperation);
-
-    let body = JSON.stringify({
+    const body = JSON.stringify({
       userID: session.userID,
       operation: currentOperation.operation,
       cost: +currentOperation.cost,
     });
-
-    console.log(session);
 
     let res = await fetch(lambdaURLS.processURL, {
       method: 'POST',
@@ -122,27 +116,24 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
     });
 
     let json = await res.json();
-    console.log(json);
 
     const newUserStatus = {
-      ...userStatus,
+      balance: +currentOperation.total,
+      cost: 0,
+      total: 0,
+      userName: session.username,
     };
 
-    newUserStatus.balance = +currentOperation.balance;
-
-    updateUserStatus(newUserStatus);
     updateCurrentOperation(operationsInitialState);
+    updateUserStatus(newUserStatus);
   };
 
   // Log Out of the Res Calculator
   const logOut = () => {
-    console.log('Logging Out Clearing Session Token');
     loggingOutHandler();
   };
 
   const navigateToArithmeticRecords = () => {
-    console.log('Submitting');
-
     navigator('/records');
   };
 
