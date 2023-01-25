@@ -3,9 +3,37 @@ import { useState, useEffect } from 'react';
 
 import { ArithmeticRecordsComponent, PaginationComponent } from '../components';
 import { useNavigate } from 'react-router-dom';
+import { lambdaURLS } from '../config';
+
+// TESTING
+// ==========
+const test = [
+  {
+    id: '1',
+    operation_id: 'ADD',
+    date: 'test 1',
+    amount: 500,
+    user_balance: 1000,
+  },
+  {
+    id: '2',
+    operation_id: 'SUBTRACT',
+    date: 'test 1',
+    amount: 500,
+    user_balance: 1000,
+  },
+  {
+    id: '3',
+    operation_id: 'MULTIPLY',
+    date: 'test 1',
+    amount: 500,
+    user_balance: 1000,
+  },
+];
+// ==========
 
 // MARK: User Arithmetic Records
-const UserArithmeticRecordsView = () => {
+const UserArithmeticRecordsView = ({ session }) => {
   // Record States
   const [recordsData, setRecordsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -17,47 +45,27 @@ const UserArithmeticRecordsView = () => {
 
   // Get Records from AWS Lambda
   useEffect(() => {
-    console.log('effect loading after component rendered');
+    let body = JSON.stringify({
+      userID: session.userID,
+      sessionToken: session.sessionToken,
+    });
 
-    setRecordsData([
-      {
-        id: 1,
-        dp2: 'test 1',
-        dp3: 'test 1',
-        dp4: 'test 1',
-      },
-      {
-        id: 2,
-        dp2: 'data x',
-        dp3: 'data 3',
-        dp4: 'data 4',
-      },
-      {
-        id: 3,
-        dp2: 'data 2',
-        dp3: 'data 3',
-        dp4: 'data 4',
-      },
-      {
-        id: 4,
-        dp2: 'data 2',
-        dp3: 'data 3',
-        dp4: 'data 4',
-      },
-      {
-        id: 5,
-        dp2: 'data 2',
-        dp3: 'data 3',
-        dp4: 'data 4',
-      },
-      {
-        id: 6,
-        dp2: 'data 2',
-        dp3: 'data 3',
-        dp4: 'data 4',
-      },
-    ]);
-  }, []);
+    // const fetchData = async () => {
+    //   const data = await fetch(lambdaURLS.recordsURL, {
+    //     method: 'POST',
+    //     body,
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //   });
+
+    //   const json = await data.json();
+
+    setRecordsData(test);
+    // };
+
+    // fetchData().catch(console.error);
+  }, [fetch]);
 
   const lastRecordIndex = (currentPage + 1) * recordsPerPage;
   const firstRecordIndex = lastRecordIndex - recordsPerPage;
@@ -81,7 +89,7 @@ const UserArithmeticRecordsView = () => {
     const pattern = new RegExp(`^${searchQuery}`);
 
     let newCurrentRecords = recordsData.filter((record) => {
-      return pattern.test(record.dp2);
+      return pattern.test(record.operation_id);
     });
 
     updateCurrentRecordsDisplay(newCurrentRecords.slice(0, 5));
@@ -89,7 +97,7 @@ const UserArithmeticRecordsView = () => {
 
   // Goes back to the RES Calculator View
   const goBackToCalculatorView = () => {
-    navigate('/calculator');
+    navigate('/'); // <----------------------------------------------- change back
   };
 
   // Type of search field

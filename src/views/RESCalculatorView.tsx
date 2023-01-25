@@ -3,8 +3,11 @@ import { useState } from 'react';
 
 import { lambdaURLS } from '../config';
 
+import { useNavigate } from 'react-router-dom';
+
 // MARK: RES Calculator View
 const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
+  const navigator = useNavigate();
   // User Balance
   const [userStatus, updateUserStatus] = useState({
     balance: userInfo.balance,
@@ -94,18 +97,19 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
   const handleSubmitOperationToLambda = async () => {
     console.log('Submitting to Amazon AWS');
 
+    console.log(currentOperation);
     let body = JSON.stringify({});
 
-    let res = await fetch(lambdaURLS.processURL, {
-      method: 'POST',
-      body,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    // let res = await fetch(lambdaURLS.processURL, {
+    //   method: 'POST',
+    //   body,
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
 
-    let json = await res.json();
-
+    // let json = await res.json();
+    let json;
     console.log(json);
   };
 
@@ -117,6 +121,8 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
 
   const navigateToArithmeticRecords = () => {
     console.log('Submitting');
+
+    navigator('/records');
   };
 
   return (

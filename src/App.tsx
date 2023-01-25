@@ -33,9 +33,23 @@ const ProtectedRoute = ({ children, session }) => {
   return session.isSessionAlive || navigating ? children : null;
 };
 
+// For Testing
+// =============
+const info = {
+  isSessionAlive: true,
+  status: 'active',
+  date: '2023-01-23T06:28:40.894Z',
+  balance: 100,
+  userID: 1,
+  username: 'luissantanderdev@gmail.com',
+  sessionToken: 'abc4',
+};
+// ============
+
 export default function App() {
   // State
-  const [session, updateSession] = useState({});
+  const [session, updateSession] = useState(info);
+  // const [session, updateSession] = useState({});
 
   // MARK: Event Handlers
   // =======================================
@@ -71,16 +85,6 @@ export default function App() {
 
     console.log(72, body);
 
-    const info = {
-      isSessionAlive: true,
-      status: 'active',
-      date: '2023-01-23T06:28:40.894Z',
-      balance: 100,
-      userID: 4,
-      username: 'abc@loanpro.com',
-      sessionToken: 'abc4',
-    };
-
     // awsReponse = {
     //   isSessionAlive: true,
     //   ...json,
@@ -108,6 +112,10 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route
+              path="/records"
+              element={<UserArithmeticRecordsView session={session} />}
+            />
+            <Route
               path="/"
               element={
                 <RESCalculatorView
@@ -116,6 +124,7 @@ export default function App() {
                 />
               }
             />
+
             <Route
               path="/t"
               element={<LoginView loginHandler={loginHandler} />}
