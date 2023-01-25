@@ -1,6 +1,4 @@
 import * as React from 'react';
-import './css/style.css';
-
 import {
   Routes,
   Route,
@@ -8,13 +6,13 @@ import {
   Navigate,
   BrowserRouter,
 } from 'react-router-dom';
-
 import {
   LoginView,
   RESCalculatorView,
   UserArithmeticRecordsView,
 } from './views';
 
+import './css/style.css';
 import { APIKeys, APIURLs, lambdaURLS } from './config';
 import { useState, useEffect } from 'react';
 
@@ -33,20 +31,20 @@ const ProtectedRoute = ({ children, session }) => {
   return session.isSessionAlive || navigating ? children : null;
 };
 
-// For Testing
-// =============
-const info = {
-  isSessionAlive: true,
-  status: 'active',
-  date: '2023-01-23T06:28:40.894Z',
-  balance: 100,
-  userID: 1,
-  username: 'luissantanderdev@gmail.com',
-  sessionToken: 'abc4',
-  randomNumbers: [-1],
+// MARK: Initial State
+const initialState = {
+  isSessionAlive: false,
+  status: '',
+  date: '',
+  balance: -1,
+  userID: -1,
+  username: '',
+  sessionToken: '',
+  randomNumbers: [],
 };
 // ============
 
+// MARK: Generate Random Numbers from Random Org.
 // Generate a Random Integer to Use for cost and pass over to
 // the server function
 const generateARandomNumbersSetFromAPI = async (): Promise<number[]> => {
@@ -63,14 +61,12 @@ const generateARandomNumbersSetFromAPI = async (): Promise<number[]> => {
       params: {
         apiKey: APIKeys.randomORGKey,
         n: 100,
-        min: 1,
+        min: -100,
         max: 1000,
       },
       id: 42,
     }),
   });
-
-  console.log(res);
 
   if (res.ok) {
     let data = await res.json();
@@ -82,8 +78,7 @@ const generateARandomNumbersSetFromAPI = async (): Promise<number[]> => {
 
 export default function App() {
   // State
-  const [session, updateSession] = useState(info);
-  // const [session, updateSession] = useState({});
+  const [session, updateSession] = useState(initialState);
 
   // MARK: Event Handlers
   // =======================================
@@ -104,34 +99,27 @@ export default function App() {
 
     let json = await res.json();
 
-    console.log(json);
-
-    if (json.error) {
+    if (!json.error) {
       awsResponse = {
-        isSessionAlive: false,
+        isSessionAlive: true,
         ...json,
+        randomNumbers,
+      };
+
+      updateSession(awsResponse);
+    } else {
+      awsResponse = {
+        invalid: true,
+        error: json.error,
       };
     }
-
-    console.log(72, body, randomNumbers);
-
-    updateSession(awsResponse);
 
     return awsResponse;
   };
 
   // Handle Logging Out
   const loggingOutHandler = () => {
-    updateSession({
-      isSessionAlive: false,
-      status: '',
-      date: '',
-      balance: -1,
-      userID: -1,
-      username: '',
-      sessionToken: '',
-      randomNumbers: [],
-    });
+    updateSession(initialState);
     <Navigate to="/" replace />;
   };
 

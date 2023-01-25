@@ -50,30 +50,30 @@ const UserArithmeticRecordsView = ({ session }) => {
       sessionToken: session.sessionToken,
     });
 
-    // const fetchData = async () => {
-    //   const data = await fetch(lambdaURLS.recordsURL, {
-    //     method: 'POST',
-    //     body,
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   });
+    const fetchData = async () => {
+      const data = await fetch(lambdaURLS.recordsURL, {
+        method: 'POST',
+        body,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    //   const json = await data.json();
+      const json = await data.json();
 
-    setRecordsData(test);
-    // };
+      console.log(json);
+      setRecordsData(json);
+    };
 
-    // fetchData().catch(console.error);
+    fetchData().catch(console.error);
   }, [fetch]);
 
   const lastRecordIndex = (currentPage + 1) * recordsPerPage;
   const firstRecordIndex = lastRecordIndex - recordsPerPage;
   const nPages = Math.ceil(recordsData.length / recordsPerPage);
 
-  if (searchTypeToggle === 'btn-all') {
+  if (searchTypeToggle === 'btn-all')
     currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
-  }
 
   // Events Handlers
   // =========================================
@@ -97,7 +97,7 @@ const UserArithmeticRecordsView = ({ session }) => {
 
   // Goes back to the RES Calculator View
   const goBackToCalculatorView = () => {
-    navigate('/'); // <----------------------------------------------- change back
+    navigate('/calculator');
   };
 
   // Type of search field

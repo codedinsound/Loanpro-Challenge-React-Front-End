@@ -9,17 +9,15 @@ const LoginView = ({ loginHandler }) => {
   // ========================
   const [isInvalidLogin, isInvalidUpdate] = useState({
     invalid: false,
-    msg: '',
+    error: '',
   });
 
   const navigate = useNavigate();
 
-  console.log(isInvalidLogin);
-
   // Event Handlers
   // =========================
   const detectInputChange = () => {
-    if (isInvalidLogin) isInvalidUpdate({ invalid: false, msg: '' });
+    if (isInvalidLogin.invalid) isInvalidUpdate({ invalid: false, error: '' });
   };
 
   const handleOnSubmitLogin = async (e: any): Promise<void> => {
@@ -29,8 +27,6 @@ const LoginView = ({ loginHandler }) => {
 
     if (e.target.password.value != '')
       protectedPassword = sha256(e.target.password.value).toString();
-
-    console.log(protectedPassword);
 
     interface Credentials {
       u: string;
@@ -42,14 +38,12 @@ const LoginView = ({ loginHandler }) => {
       p: protectedPassword,
     };
 
-    let canNavigate: any = await loginHandler(credentials);
+    const canNavigate: any = await loginHandler(credentials);
 
-    console.log('handleSubmitLogin: 47', canNavigate);
-
-    if (!canNavigate.invalid) {
+    if (canNavigate.invalid) {
       isInvalidUpdate({
         invalid: true,
-        msg: canNavigate.error,
+        error: canNavigate.error,
       });
     }
 
@@ -62,7 +56,8 @@ const LoginView = ({ loginHandler }) => {
 
   let errorMessage: any;
   if (isInvalidLogin.invalid) {
-    errorMessage = <div>{isInvalidLogin.msg}</div>;
+    console.log(isInvalidLogin);
+    errorMessage = <div>{isInvalidLogin.error}</div>;
   }
 
   return (

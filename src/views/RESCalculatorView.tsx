@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 
 import { lambdaURLS } from '../config';
-
 import { useNavigate } from 'react-router-dom';
+import { getRandomIntegerFromSet } from '../utils';
 
 // MARK: RES Calculator View
 const RESCalculatorView = ({ session, loggingOutHandler }) => {
@@ -34,7 +34,7 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
     const newUserStatus = { ...userStatus };
     let newOperationState = { ...currentOperation };
 
-    newUserStatus.cost = 2;
+    newUserStatus.cost = getRandomIntegerFromSet(session.randomNumbers);
 
     newOperationState.balance = `${newUserStatus.balance}`;
     newOperationState.cost = `${newUserStatus.cost}`;
@@ -87,7 +87,7 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
       };
     }
 
-    console.log(operation);
+    console.log(90, operation);
 
     updateUserStatus(newUserStatus);
     updateCurrentOperation(newOperationState);
@@ -107,16 +107,15 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
 
     console.log(session);
 
-    // let res = await fetch(lambdaURLS.processURL, {
-    //   method: 'POST',
-    //   body,
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
+    let res = await fetch(lambdaURLS.processURL, {
+      method: 'POST',
+      body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-    // let json = await res.json();
-    let json;
+    let json = await res.json();
     console.log(json);
   };
 
@@ -168,11 +167,11 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
             <div className="col">Cost: {currentOperation.cost}</div>
           </div>
           <div className="row mt-1">
-            <div className="col">
+            <div className="col mh-100">
               <button
                 id="ADD"
                 type="button"
-                className="operations-btns"
+                className="operations-btns h-100"
                 onClick={handleOperationPressed}
               >
                 Add (+)
@@ -182,7 +181,7 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
               <button
                 id="SUBTRACT"
                 type="button"
-                className="operations-btns"
+                className="operations-btns h-100"
                 onClick={handleOperationPressed}
               >
                 Subtract (-)
@@ -194,7 +193,7 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
               <button
                 id="MULTIPLY"
                 type="button"
-                className="operations-btns"
+                className="operations-btns h-100"
                 onClick={handleOperationPressed}
               >
                 Multiply (x)
@@ -204,7 +203,7 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
               <button
                 id="DIVIDE"
                 type="button"
-                className="operations-btns"
+                className="operations-btns h-100"
                 onClick={handleOperationPressed}
               >
                 Divide (/)
@@ -216,7 +215,7 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
               <button
                 id="SQUARE_ROOT"
                 type="button"
-                className="operations-btns"
+                className="operations-btns h-100"
                 onClick={handleOperationPressed}
               >
                 Square Root (√)
