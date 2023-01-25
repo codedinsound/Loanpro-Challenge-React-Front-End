@@ -5,33 +5,6 @@ import { ArithmeticRecordsComponent, PaginationComponent } from '../components';
 import { useNavigate } from 'react-router-dom';
 import { lambdaURLS } from '../config';
 
-// TESTING
-// ==========
-const test = [
-  {
-    id: '1',
-    operation_id: 'ADD',
-    date: 'test 1',
-    amount: 500,
-    user_balance: 1000,
-  },
-  {
-    id: '2',
-    operation_id: 'SUBTRACT',
-    date: 'test 1',
-    amount: 500,
-    user_balance: 1000,
-  },
-  {
-    id: '3',
-    operation_id: 'MULTIPLY',
-    date: 'test 1',
-    amount: 500,
-    user_balance: 1000,
-  },
-];
-// ==========
-
 // MARK: User Arithmetic Records
 const UserArithmeticRecordsView = ({ session }) => {
   // Record States
@@ -60,8 +33,6 @@ const UserArithmeticRecordsView = ({ session }) => {
       });
 
       const json = await data.json();
-
-      console.log(json);
       setRecordsData(json);
     };
 
@@ -73,7 +44,9 @@ const UserArithmeticRecordsView = ({ session }) => {
   const nPages = Math.ceil(recordsData.length / recordsPerPage);
 
   if (searchTypeToggle === 'btn-all')
-    currentRecords = recordsData.slice(firstRecordIndex, lastRecordIndex);
+    currentRecords = recordsData
+      .slice(firstRecordIndex, lastRecordIndex)
+      .reverse();
 
   // Events Handlers
   // =========================================

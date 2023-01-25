@@ -5,6 +5,18 @@ import { lambdaURLS } from '../config';
 import { useNavigate } from 'react-router-dom';
 import { getRandomIntegerFromSet } from '../utils';
 
+// Initial States
+// ==================================
+const operationsInitialState = {
+  operation: '',
+  symbol: '',
+  balance: '',
+  cost: '',
+  total: '',
+};
+
+// ==================================
+
 // MARK: RES Calculator View
 const RESCalculatorView = ({ session, loggingOutHandler }) => {
   const navigator = useNavigate();
@@ -17,13 +29,9 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
   });
 
   // Operations State
-  const [currentOperation, updateCurrentOperation] = useState({
-    operation: '',
-    symbol: '',
-    balance: '',
-    cost: '',
-    total: '',
-  });
+  const [currentOperation, updateCurrentOperation] = useState(
+    operationsInitialState
+  );
 
   // Event Handlers
   // ================================================
@@ -87,8 +95,6 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
       };
     }
 
-    console.log(90, operation);
-
     updateUserStatus(newUserStatus);
     updateCurrentOperation(newOperationState);
   };
@@ -117,6 +123,15 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
 
     let json = await res.json();
     console.log(json);
+
+    const newUserStatus = {
+      ...userStatus,
+    };
+
+    newUserStatus.balance = +currentOperation.balance;
+
+    updateUserStatus(newUserStatus);
+    updateCurrentOperation(operationsInitialState);
   };
 
   // Log Out of the Res Calculator
