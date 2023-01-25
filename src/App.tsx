@@ -15,7 +15,7 @@ import {
   UserArithmeticRecordsView,
 } from './views';
 
-import { lambdaURLS } from './config';
+import { APIKeys, APIURLs, lambdaURLS } from './config';
 import { useState, useEffect } from 'react';
 
 // MARK: Protect the routes
@@ -43,8 +43,42 @@ const info = {
   userID: 1,
   username: 'luissantanderdev@gmail.com',
   sessionToken: 'abc4',
+  randomNumbers: [-1],
 };
 // ============
+
+// Generate a Random Integer to Use for cost and pass over to
+// the server function
+const generateARandomNumbersSetFromAPI = async (): Promise<number[]> => {
+  let generatedRandomValues = [1];
+
+  let res = await fetch(APIURLs.randomURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'generateIntegers',
+      params: {
+        apiKey: APIKeys.randomORGKey,
+        n: 100,
+        min: 1,
+        max: 1000,
+      },
+      id: 42,
+    }),
+  });
+
+  console.log(res);
+
+  if (res.ok) {
+    let data = await res.json();
+    generatedRandomValues = data.result.random.data;
+  }
+
+  return generatedRandomValues;
+};
 
 export default function App() {
   // State
@@ -55,45 +89,31 @@ export default function App() {
   // =======================================
   // Handle Authentication with Amazon AWS
   const loginHandler = async (credentials): Promise<any> => {
-    let awsResponse = {};
+    let awsResponse;
     let body = JSON.stringify(credentials);
 
-    // let res = await fetch(lambdaURLS.authURL, {
-    //   method: 'POST',
-    //   body,
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
+    let randomNumbers: number[] = await generateARandomNumbersSetFromAPI();
 
-    // let json = await res.json();
+    let res = await fetch(lambdaURLS.authURL, {
+      method: 'POST',
+      body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-    // interface ErrorMessage {
-    //   error: string;
-    // }
+    let json = await res.json();
 
-    // console.log(json);
+    console.log(json);
 
-    // if (json.error) {
-    //   awsReponse = {
-    //     isSessionAlive: false,
-    //     ...json,
-    //   };
+    if (json.error) {
+      awsResponse = {
+        isSessionAlive: false,
+        ...json,
+      };
+    }
 
-    //   return awsReponse;
-    // }
-
-    console.log(72, body);
-
-    // awsReponse = {
-    //   isSessionAlive: true,
-    //   ...json,
-    // };
-
-    awsResponse = {
-      isSessionAlive: true,
-      ...info,
-    };
+    console.log(72, body, randomNumbers);
 
     updateSession(awsResponse);
 
@@ -102,7 +122,16 @@ export default function App() {
 
   // Handle Logging Out
   const loggingOutHandler = () => {
-    updateSession({ isSessionAlive: false });
+    updateSession({
+      isSessionAlive: false,
+      status: '',
+      date: '',
+      balance: -1,
+      userID: -1,
+      username: '',
+      sessionToken: '',
+      randomNumbers: [],
+    });
     <Navigate to="/" replace />;
   };
 
@@ -112,43 +141,28 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route
-              path="/records"
-              element={<UserArithmeticRecordsView session={session} />}
-            />
-            <Route
               path="/"
-              element={
-                <RESCalculatorView
-                  userInfo={session}
-                  loggingOutHandler={loggingOutHandler}
-                />
-              }
-            />
-
-            <Route
-              path="/t"
               element={<LoginView loginHandler={loginHandler} />}
             />
-
-            {/* <Route
+            <Route
               path="/calculator"
               element={
                 <ProtectedRoute session={session}>
                   <RESCalculatorView
-                    userInfo={session}
+                    session={session}
                     loggingOutHandler={loggingOutHandler}
                   />
                 </ProtectedRoute>
               }
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/records"
               element={
                 <ProtectedRoute session={session}>
-                  <UserArithmeticRecordsView />
+                  <UserArithmeticRecordsView session={session} />
                 </ProtectedRoute>
               }
-            /> */}
+            />
           </Routes>
         </BrowserRouter>
       </div>

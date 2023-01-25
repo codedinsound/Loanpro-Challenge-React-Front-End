@@ -6,14 +6,14 @@ import { lambdaURLS } from '../config';
 import { useNavigate } from 'react-router-dom';
 
 // MARK: RES Calculator View
-const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
+const RESCalculatorView = ({ session, loggingOutHandler }) => {
   const navigator = useNavigate();
   // User Balance
   const [userStatus, updateUserStatus] = useState({
-    balance: userInfo.balance,
+    balance: session.balance,
     cost: 0,
     total: 0,
-    userName: userInfo.username,
+    userName: session.username,
   });
 
   // Operations State
@@ -97,8 +97,15 @@ const RESCalculatorView = ({ userInfo, loggingOutHandler }) => {
   const handleSubmitOperationToLambda = async () => {
     console.log('Submitting to Amazon AWS');
 
-    console.log(currentOperation);
-    let body = JSON.stringify({});
+    console.log(session, currentOperation);
+
+    let body = JSON.stringify({
+      userID: session.userID,
+      operation: currentOperation.operation,
+      cost: +currentOperation.cost,
+    });
+
+    console.log(session);
 
     // let res = await fetch(lambdaURLS.processURL, {
     //   method: 'POST',
