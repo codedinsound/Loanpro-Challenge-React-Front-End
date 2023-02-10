@@ -77,7 +77,7 @@ const generateARandomNumbersSetFromAPI = async (): Promise<number[]> => {
 };
 
 export default function App() {
-  // State
+  // Session State
   const [session, updateSession] = useState(initialState);
 
   // MARK: Event Handlers
@@ -89,6 +89,8 @@ export default function App() {
 
     let randomNumbers: number[] = await generateARandomNumbersSetFromAPI();
 
+    console.log(92, body);
+
     let res = await fetch(lambdaURLS.authURL, {
       method: 'POST',
       body,
@@ -98,6 +100,8 @@ export default function App() {
     });
 
     let json = await res.json();
+
+    console.log('App', 102, json);
 
     if (!json.error) {
       awsResponse = {
@@ -120,6 +124,8 @@ export default function App() {
   // Handle Logging Out
   const loggingOutHandler = () => {
     updateSession(initialState);
+
+    console.log('app', 126, session);
     <Navigate to="/" replace />;
   };
 

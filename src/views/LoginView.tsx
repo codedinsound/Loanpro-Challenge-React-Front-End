@@ -38,6 +38,8 @@ const LoginView = ({ loginHandler }) => {
       p: protectedPassword,
     };
 
+    console.log(41, credentials);
+
     const canNavigate: any = await loginHandler(credentials);
 
     if (canNavigate.invalid) {
@@ -55,6 +57,7 @@ const LoginView = ({ loginHandler }) => {
   };
 
   let errorMessage: any;
+
   if (isInvalidLogin.invalid) {
     errorMessage = <div>{isInvalidLogin.error}</div>;
   }
