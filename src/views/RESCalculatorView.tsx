@@ -20,6 +20,9 @@ const operationsInitialState = {
 // MARK: RES Calculator View
 const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
   const navigator = useNavigate();
+
+  // Client State
+  // ================================================
   // User Balance
   const [userStatus, updateUserStatus] = useState({
     balance: session.balance,
@@ -130,7 +133,6 @@ const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
     updateUserStatus(newUserStatus);
   };
 
-  // Log Out of the Res Calculator
   const logOut = () => {
     loggingOutHandler();
   };

@@ -133,8 +133,6 @@ export default function App() {
   // Handle Logging Out
   const loggingOutHandler = () => {
     updateSession(initialState);
-
-    console.log('app', 126, session);
     <Navigate to="/" replace />;
   };
 
