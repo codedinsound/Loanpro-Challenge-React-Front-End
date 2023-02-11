@@ -107,7 +107,7 @@ const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
       cost: +currentOperation.cost,
     });
 
-    let res = await fetch(lambdaURLS.processURL, {
+    const res = await fetch(lambdaURLS.processURL, {
       method: 'POST',
       body,
       headers: {
@@ -116,7 +116,6 @@ const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
     });
 
     let json = await res.json();
-
     const { balance } = json;
 
     const newUserStatus = {
@@ -126,6 +125,7 @@ const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
       userName: session.username,
     };
 
+    updateBalance(balance);
     updateCurrentOperation(operationsInitialState);
     updateUserStatus(newUserStatus);
   };

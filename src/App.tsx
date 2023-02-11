@@ -122,7 +122,13 @@ export default function App() {
   };
 
   // Update balance change in session
-  const updateBalanceInSessionState = (balance: number): void => {};
+  const updateBalanceInSessionState = (balance: number): void => {
+    const newSessionState = {
+      ...session,
+      balance,
+    };
+    updateSession(newSessionState);
+  };
 
   // Handle Logging Out
   const loggingOutHandler = () => {
