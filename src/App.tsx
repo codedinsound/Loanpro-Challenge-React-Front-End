@@ -121,6 +121,9 @@ export default function App() {
     return awsResponse;
   };
 
+  // Update balance change in session
+  const updateBalanceInSessionState = (balance: number): void => {};
+
   // Handle Logging Out
   const loggingOutHandler = () => {
     updateSession(initialState);
@@ -144,6 +147,7 @@ export default function App() {
                 <ProtectedRoute session={session}>
                   <RESCalculatorView
                     session={session}
+                    updateBalance={updateBalanceInSessionState}
                     loggingOutHandler={loggingOutHandler}
                   />
                 </ProtectedRoute>

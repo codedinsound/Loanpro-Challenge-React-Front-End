@@ -18,7 +18,7 @@ const operationsInitialState = {
 // ==================================
 
 // MARK: RES Calculator View
-const RESCalculatorView = ({ session, loggingOutHandler }) => {
+const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
   const navigator = useNavigate();
   // User Balance
   const [userStatus, updateUserStatus] = useState({
@@ -117,8 +117,10 @@ const RESCalculatorView = ({ session, loggingOutHandler }) => {
 
     let json = await res.json();
 
+    const { balance } = json;
+
     const newUserStatus = {
-      balance: +currentOperation.total,
+      balance,
       cost: 0,
       total: 0,
       userName: session.username,
