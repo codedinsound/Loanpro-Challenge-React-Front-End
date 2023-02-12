@@ -155,17 +155,19 @@ const UserArithmeticRecordsView = ({ session }) => {
       record: showModal.record,
     });
 
-    const awsResponse = await fetch(lambdaURLS.deleteRecordURL, {
-      method: 'DELETE',
-      body,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    // const awsResponse = await fetch(lambdaURLS.deleteRecordURL, {
+    //   method: 'DELETE',
+    //   body,
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
 
-    const json = await awsResponse.json();
+    // const json = await awsResponse.json();
+    // console.log(json);
 
-    console.log(json);
+
+    
   };
 
   return (

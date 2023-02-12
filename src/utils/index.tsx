@@ -1,3 +1,5 @@
+import AsyncTimer from './AsyncTimer';
+
 // MARK: Get A Random Number from the random generated Values
 const getRandomIntegerFromSet = (dataPoints: number[]): number => {
   const randomIndex = Math.floor(Math.random() * dataPoints.length - 1);
@@ -5,4 +7,4 @@ const getRandomIntegerFromSet = (dataPoints: number[]): number => {
   return dataPoints[randomIndex];
 };
 
-export { getRandomIntegerFromSet };
+export { AsyncTimer, getRandomIntegerFromSet };
