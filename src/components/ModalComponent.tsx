@@ -49,7 +49,9 @@ const ModalComponent = ({ record, modalCancelHandler, deleteRecordFromDB }) => {
   }
 
   if (isLoading === 'success') {
-    modalBody = <div className="text-center">Record Deleted Successfully</div>;
+    modalBody = (
+      <div className="text-center">Record {record.id} Deleted Successfully</div>
+    );
   }
 
   return (

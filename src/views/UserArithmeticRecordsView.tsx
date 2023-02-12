@@ -28,6 +28,9 @@ const UserArithmeticRecordsView = ({ session }) => {
   // Client State
   // =========================================
   // const [recordsData, setRecordsData] = useState([]);
+
+  const [reRender, setRenderToggle] = useState(false);
+
   const [recordsData, setRecordsData] = useState(dummyRecords);
 
   const [currentPage, setCurrentPage] = useState(0);
