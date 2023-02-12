@@ -8,6 +8,7 @@ import {
 } from '../components';
 import { useNavigate } from 'react-router-dom';
 import { lambdaURLS } from '../config';
+import { AsyncTimer } from '../utils';
 
 // TESTING DUMMY DATA
 // =====================================================================
@@ -166,8 +167,9 @@ const UserArithmeticRecordsView = ({ session }) => {
     // const json = await awsResponse.json();
     // console.log(json);
 
+    await AsyncTimer.sleep(10000);
 
-    
+    console.log('Got a response');
   };
 
   return (
