@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ModalComponent = ({ record }) => {
+const ModalComponent = ({ record, modalCancelHandler, deleteRecordFromDB }) => {
   return (
     <div
       className="modal fade show"
@@ -18,6 +18,7 @@ const ModalComponent = ({ record }) => {
               className="close"
               data-dismiss="modal"
               aria-label="Close"
+              onClick={modalCancelHandler}
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -43,10 +44,15 @@ const ModalComponent = ({ record }) => {
               type="button"
               className="btn btn-secondary"
               data-dismiss="modal"
+              onClick={modalCancelHandler}
             >
               Cancel
             </button>
-            <button type="button" className="btn btn-danger">
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={deleteRecordFromDB}
+            >
               Delete
             </button>
           </div>

@@ -130,9 +130,53 @@ const UserArithmeticRecordsView = ({ session }) => {
       </div>
     );
 
+  const modalCancelHandler = (): void => {
+    console.log('Canceling Delete Operation from Modal');
+    toggleShowModal({
+      show: false,
+      record: {
+        id: '',
+        operation_id: '',
+        date: new Date(),
+        amount: -1,
+        user_balance: -1,
+      },
+    });
+  };
+
+  const deleteRecordFromDB = async (): Promise<void> => {
+    console.log(session);
+    console.log(showModal);
+
+    let body = JSON.stringify({
+      userID: session.userID,
+      sessionToken: session.sessionToken,
+      operation: 'DELETE_RECORD',
+      record: showModal.record,
+    });
+
+    const awsResponse = await fetch(lambdaURLS.deleteRecordURL, {
+      method: 'DELETE',
+      body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // modalCancelHandler();
+
+    console.log(awsResponse);
+  };
+
   return (
     <div className="container mt-5">
-      {showModal.show && <ModalComponent record={showModal.record} />}
+      {showModal.show && (
+        <ModalComponent
+          record={showModal.record}
+          modalCancelHandler={modalCancelHandler}
+          deleteRecordFromDB={deleteRecordFromDB}
+        />
+      )}
       <div className="row">
         <div className="col"></div>
         <div className="col-auto ml-auto">
