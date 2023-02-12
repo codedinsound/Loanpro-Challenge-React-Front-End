@@ -35,7 +35,7 @@ const UserArithmeticRecordsView = ({ session }) => {
   let [currentRecords, updateCurrentRecordsDisplay] = useState([]);
 
   const [showModal, toggleShowModal] = useState({
-    show: true,
+    show: false,
     record: {
       id: '',
       operation_id: '',
@@ -144,28 +144,30 @@ const UserArithmeticRecordsView = ({ session }) => {
     });
   };
 
-  const deleteRecordFromDB = async (): Promise<void> => {
-    console.log(session);
+  const deleteRecordFromDB = async () => {
+    console.log(1, session);
     console.log(showModal);
 
-    let body = JSON.stringify({
+    const body = JSON.stringify({
       userID: session.userID,
       sessionToken: session.sessionToken,
       operation: 'DELETE_RECORD',
       record: showModal.record,
     });
 
-    const awsResponse = await fetch(lambdaURLS.deleteRecordURL, {
-      method: 'DELETE',
+    let awsResponse = await fetch('https://stackoverflow.com', {
       body,
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
-    // modalCancelHandler();
-
     console.log(awsResponse);
+
+    let json = await awsResponse.json();
+
+    console.log(json);
   };
 
   return (
@@ -178,6 +180,7 @@ const UserArithmeticRecordsView = ({ session }) => {
         />
       )}
       <div className="row">
+        <button onClick={deleteRecordFromDB}>TEST</button>
         <div className="col"></div>
         <div className="col-auto ml-auto">
           <button

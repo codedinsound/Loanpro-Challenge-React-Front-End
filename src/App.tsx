@@ -83,7 +83,7 @@ export default function App() {
   // MARK: Event Handlers
   // =======================================
   // Handle Authentication with Amazon AWS
-  const loginHandler = async (credentials): Promise<any> => {
+  const loginHandler = async (credentials) => {
     let awsResponse;
     let body = JSON.stringify(credentials);
 

@@ -110,7 +110,6 @@ const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
     updateCurrentOperation(newOperationState);
   };
 
-  // Submit to Lambda
   const handleSubmitOperationToLambda = async () => {
     const body = JSON.stringify({
       userID: session.userID,
@@ -151,7 +150,6 @@ const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
 
   return (
     <div className="container mt-5">
-
       <div className="row">
         <div className="col mt-1">
           <div>User: {userStatus.userName}</div>

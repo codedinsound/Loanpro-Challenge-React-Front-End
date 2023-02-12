@@ -1,6 +1,12 @@
 import React from 'react';
 
 const ModalComponent = ({ record, modalCancelHandler, deleteRecordFromDB }) => {
+  const deleteRecordHandler = async () => {
+    console.log('Delete');
+
+    await deleteRecordFromDB();
+  };
+
   return (
     <div
       className="modal fade show"
@@ -51,7 +57,7 @@ const ModalComponent = ({ record, modalCancelHandler, deleteRecordFromDB }) => {
             <button
               type="button"
               className="btn btn-danger"
-              onClick={deleteRecordFromDB}
+              onClick={deleteRecordHandler}
             >
               Delete
             </button>
