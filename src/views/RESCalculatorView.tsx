@@ -17,6 +17,14 @@ const operationsInitialState = {
 
 // ==================================
 
+const ModalComponent = () => {
+  return (
+    <div className="modal show">
+      <div className="modal-dialog">Thing</div>
+    </div>
+  );
+};
+
 // MARK: RES Calculator View
 const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
   const navigator = useNavigate();
@@ -143,6 +151,7 @@ const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
 
   return (
     <div className="container mt-5">
+
       <div className="row">
         <div className="col mt-1">
           <div>User: {userStatus.userName}</div>

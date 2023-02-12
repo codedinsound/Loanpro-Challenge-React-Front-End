@@ -143,8 +143,13 @@ export default function App() {
           <Routes>
             <Route
               path="/"
-              element={<LoginView loginHandler={loginHandler} />}
+              element={<UserArithmeticRecordsView session={session} />}
             />
+
+            {/* <Route
+              path="/"
+              element={<LoginView loginHandler={loginHandler} />}
+            /> */}
             <Route
               path="/calculator"
               element={

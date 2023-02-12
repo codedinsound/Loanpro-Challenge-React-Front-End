@@ -1,18 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+const TableRowComponent = ({ record, onDoubleClickRecordOpenModalHandler }) => {
+  const date: Date = new Date(record.date);
+
+  const onDoubleClickTableRowHandler = (): void => {
+    onDoubleClickRecordOpenModalHandler(record);
+  };
+
+  return (
+    <tr key={record.id} onDoubleClick={onDoubleClickTableRowHandler}>
+      <td>{record.id}</td>
+      <td>{record.operation_id}</td>
+      <td>{date.toLocaleDateString()}</td>
+      <td>{record.amount}</td>
+      <td>{record.user_balance}</td>
+    </tr>
+  );
+};
 
 const ArithmeticRecordsComponent = ({ recordsData }) => {
-  const list = recordsData.map((record) => {
-    const date: Date = new Date(record.date);
+  // State
+  // =========================================
+  const [showModal, setShowModal] = useState(true);
 
-    return (
-      <tr key={record.id}>
-        <td>{record.id}</td>
-        <td>{record.operation_id}</td>
-        <td>{date.toLocaleDateString()}</td>
-        <td>{record.amount}</td>
-        <td>{record.user_balance}</td>
-      </tr>
+  // Event Handlers
+  // =========================================
+  const onDoubleClickRecordOpenModalHandler = (record): void => {
+    console.log(record);
+    setShowModal(true);
+  };
+
+  const tableRows = recordsData.map((record) => {
+    const row = (
+      <TableRowComponent
+        record={record}
+        onDoubleClickRecordOpenModalHandler={
+          onDoubleClickRecordOpenModalHandler
+        }
+      />
     );
+
+    return row;
   });
 
   return (
@@ -27,7 +55,7 @@ const ArithmeticRecordsComponent = ({ recordsData }) => {
             <th scope="col">Balance</th>
           </tr>
         </thead>
-        <tbody>{list}</tbody>
+        <tbody>{tableRows}</tbody>
       </table>
     </div>
   );

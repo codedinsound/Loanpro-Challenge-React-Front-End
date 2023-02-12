@@ -5,10 +5,26 @@ import { ArithmeticRecordsComponent, PaginationComponent } from '../components';
 import { useNavigate } from 'react-router-dom';
 import { lambdaURLS } from '../config';
 
+// TESTING DUMMY DATA
+// =====================================================================
+const dummyRecords = [
+  {
+    id: '4-1',
+    operation_id: 'ADD',
+    date: new Date(),
+    amount: 1000,
+    user_balance: 100000,
+  },
+];
+// =====================================================================
+
 // MARK: User Arithmetic Records
 const UserArithmeticRecordsView = ({ session }) => {
-  // Record States
-  const [recordsData, setRecordsData] = useState([]);
+  // Client State
+  // =========================================
+  // const [recordsData, setRecordsData] = useState([]);
+  const [recordsData, setRecordsData] = useState(dummyRecords);
+
   const [currentPage, setCurrentPage] = useState(0);
   const [recordsPerPage] = useState(2);
   const [searchTypeToggle, setSearchTypeToggle] = useState('btn-all');
@@ -17,27 +33,27 @@ const UserArithmeticRecordsView = ({ session }) => {
   const navigate = useNavigate();
 
   // Get Records from AWS Lambda
-  useEffect(() => {
-    let body = JSON.stringify({
-      userID: session.userID,
-      sessionToken: session.sessionToken,
-    });
+  // useEffect(() => {
+  //   let body = JSON.stringify({
+  //     userID: session.userID,
+  //     sessionToken: session.sessionToken,
+  //   });
 
-    const fetchData = async () => {
-      const data = await fetch(lambdaURLS.recordsURL, {
-        method: 'POST',
-        body,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  //   const fetchData = async () => {
+  //     const data = await fetch(lambdaURLS.recordsURL, {
+  //       method: 'POST',
+  //       body,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
 
-      const json = await data.json();
-      setRecordsData(json);
-    };
+  //     const json = await data.json();
+  //     setRecordsData(json);
+  //   };
 
-    fetchData().catch(console.error);
-  }, [fetch]);
+  //   fetchData().catch(console.error);
+  // }, [fetch]);
 
   const lastRecordIndex = (currentPage + 1) * recordsPerPage;
   const firstRecordIndex = lastRecordIndex - recordsPerPage;
@@ -95,6 +111,7 @@ const UserArithmeticRecordsView = ({ session }) => {
 
   return (
     <div className="container mt-5">
+
       <div className="row">
         <div className="col"></div>
         <div className="col-auto ml-auto">
