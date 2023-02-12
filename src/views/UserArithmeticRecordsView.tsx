@@ -1,7 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { ArithmeticRecordsComponent, PaginationComponent } from '../components';
+import {
+  ArithmeticRecordsComponent,
+  ModalComponent,
+  PaginationComponent,
+} from '../components';
 import { useNavigate } from 'react-router-dom';
 import { lambdaURLS } from '../config';
 
@@ -29,6 +33,17 @@ const UserArithmeticRecordsView = ({ session }) => {
   const [recordsPerPage] = useState(2);
   const [searchTypeToggle, setSearchTypeToggle] = useState('btn-all');
   let [currentRecords, updateCurrentRecordsDisplay] = useState([]);
+
+  const [showModal, toggleShowModal] = useState({
+    show: true,
+    record: {
+      id: '',
+      operation_id: '',
+      date: new Date(),
+      amount: -1,
+      user_balance: -1,
+    },
+  });
 
   const navigate = useNavigate();
 
@@ -66,13 +81,21 @@ const UserArithmeticRecordsView = ({ session }) => {
 
   // Events Handlers
   // =========================================
-  // Detect toggle function
+
+  const showModalHandler = (record): void => {
+    console.log('Show Modal', record);
+
+    toggleShowModal({
+      show: true,
+      record: record,
+    });
+  };
+
   const detectToggleHandler = (e: any) => {
     const choice = e.target.value;
     return searchTypeToggle !== choice ? setSearchTypeToggle(choice) : '';
   };
 
-  // Detect search queries
   const detectSearchAndUpdateHandler = (e: any) => {
     const searchQuery = e.target.value;
     const pattern = new RegExp(`^${searchQuery}`);
@@ -84,12 +107,10 @@ const UserArithmeticRecordsView = ({ session }) => {
     updateCurrentRecordsDisplay(newCurrentRecords.slice(0, 5));
   };
 
-  // Goes back to the RES Calculator View
   const goBackToCalculatorView = () => {
     navigate('/calculator');
   };
 
-  // Type of search field
   const searchField =
     searchTypeToggle === 'btn-all' ? (
       <PaginationComponent
@@ -111,7 +132,7 @@ const UserArithmeticRecordsView = ({ session }) => {
 
   return (
     <div className="container mt-5">
-
+      {showModal.show && <ModalComponent record={showModal.record} />}
       <div className="row">
         <div className="col"></div>
         <div className="col-auto ml-auto">
@@ -148,7 +169,10 @@ const UserArithmeticRecordsView = ({ session }) => {
           </button>
         </div>
       </div>
-      <ArithmeticRecordsComponent recordsData={currentRecords} />
+      <ArithmeticRecordsComponent
+        recordsData={currentRecords}
+        openModalHandler={showModalHandler}
+      />
       {searchField}
     </div>
   );

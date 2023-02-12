@@ -18,16 +18,11 @@ const TableRowComponent = ({ record, onDoubleClickRecordOpenModalHandler }) => {
   );
 };
 
-const ArithmeticRecordsComponent = ({ recordsData }) => {
-  // State
-  // =========================================
-  const [showModal, setShowModal] = useState(true);
-
+const ArithmeticRecordsComponent = ({ recordsData, openModalHandler }) => {
   // Event Handlers
-  // =========================================
-  const onDoubleClickRecordOpenModalHandler = (record): void => {
-    console.log(record);
-    setShowModal(true);
+  // ==========================================
+  const onDoubleClickRecordOpenModalHandler = (record: object): void => {
+    openModalHandler(record);
   };
 
   const tableRows = recordsData.map((record) => {

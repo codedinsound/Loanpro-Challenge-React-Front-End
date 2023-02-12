@@ -1,4 +1,5 @@
 import ArithmeticRecordsComponent from './ArithmeticRecordsComponent';
-import PaginationComponent from './PaginationComponent ';
+import ModalComponent from './ModalComponent';
+import PaginationComponent from './PaginationComponent';
 
-export { ArithmeticRecordsComponent, PaginationComponent };
+export { ArithmeticRecordsComponent, ModalComponent, PaginationComponent };
