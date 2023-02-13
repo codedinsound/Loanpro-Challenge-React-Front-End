@@ -87,7 +87,6 @@ const UserArithmeticRecordsView = ({ session }) => {
 
   // Events Handlers
   // =========================================
-
   const showModalHandler = (record): void => {
     console.log('Show Modal', record);
 
@@ -154,21 +153,12 @@ const UserArithmeticRecordsView = ({ session }) => {
     console.log(1, session);
     console.log(showModal);
 
-    // const body = JSON.stringify({
-    //   userID: session.userID,
-    //   sessionToken: session.sessionToken,
-    //   operation: 'DELETE_RECORD',
-    //   record: showModal.record,
-    // });
-
     const body = JSON.stringify({
-      userID: 4,
-      sessionToken: 'abc1',
+      userID: session.userID,
+      sessionToken: session.sessionToken,
       operation: 'DELETE_RECORD',
       record: showModal.record,
     });
-
-    console.log(body);
 
     const awsResponse = await fetch(lambdaURLS.deleteRecordURL, {
       method: 'DELETE',
