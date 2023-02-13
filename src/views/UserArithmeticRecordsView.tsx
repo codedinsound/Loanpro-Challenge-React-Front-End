@@ -54,27 +54,27 @@ const UserArithmeticRecordsView = ({ session }) => {
   const navigate = useNavigate();
 
   // Get Records from AWS Lambda
-  // useEffect(() => {
-  //   let body = JSON.stringify({
-  //     userID: session.userID,
-  //     sessionToken: session.sessionToken,
-  //   });
+  useEffect(() => {
+    let body = JSON.stringify({
+      userID: session.userID,
+      sessionToken: session.sessionToken,
+    });
 
-  //   const fetchData = async () => {
-  //     const data = await fetch(lambdaURLS.recordsURL, {
-  //       method: 'POST',
-  //       body,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
+    const fetchData = async () => {
+      const data = await fetch(lambdaURLS.recordsURL, {
+        method: 'POST',
+        body,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-  //     const json = await data.json();
-  //     setRecordsData(json);
-  //   };
+      const json = await data.json();
+      setRecordsData(json);
+    };
 
-  //   fetchData().catch(console.error);
-  // }, [fetch]);
+    fetchData().catch(console.error);
+  }, [fetch]);
 
   const lastRecordIndex = (currentPage + 1) * recordsPerPage;
   const firstRecordIndex = lastRecordIndex - recordsPerPage;
