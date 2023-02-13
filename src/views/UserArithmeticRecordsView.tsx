@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-
 import {
   ArithmeticRecordsComponent,
   ModalComponent,
@@ -12,22 +11,22 @@ import { AsyncTimer } from '../utils';
 
 // TESTING DUMMY DATA
 // =====================================================================
-const dummyRecords = [
-  {
-    id: '4-1',
-    operation_id: 'INIT',
-    date: new Date(),
-    amount: 92925,
-    user_balance: 92925,
-  },
-  {
-    id: '4-2',
-    operation_id: 'ADD',
-    date: new Date(),
-    amount: 5000,
-    user_balance: 97925,
-  },
-];
+// const dummyRecords = [
+//   {
+//     id: '4-1',
+//     operation_id: 'INIT',
+//     date: new Date(),
+//     amount: 92925,
+//     user_balance: 92925,
+//   },
+//   {
+//     id: '4-2',
+//     operation_id: 'ADD',
+//     date: new Date(),
+//     amount: 5000,
+//     user_balance: 97925,
+//   },
+// ];
 // =====================================================================
 
 // MARK: User Arithmetic Records
@@ -150,9 +149,6 @@ const UserArithmeticRecordsView = ({ session }) => {
   };
 
   const deleteRecordFromDB = async () => {
-    console.log(1, session);
-    console.log(showModal);
-
     const body = JSON.stringify({
       userID: session.userID,
       sessionToken: session.sessionToken,
@@ -171,13 +167,8 @@ const UserArithmeticRecordsView = ({ session }) => {
     const json = await awsResponse.json();
     const records = JSON.parse(json.body);
 
-    console.log('records', records);
-
     setRecordsData(records);
-
-    await AsyncTimer.sleep(10000);
-
-    console.log('Got a response');
+    await AsyncTimer.sleep(5000);
   };
 
   return (

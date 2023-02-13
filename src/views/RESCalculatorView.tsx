@@ -16,15 +16,6 @@ const operationsInitialState = {
 };
 
 // ==================================
-
-const ModalComponent = () => {
-  return (
-    <div className="modal show">
-      <div className="modal-dialog">Thing</div>
-    </div>
-  );
-};
-
 // MARK: RES Calculator View
 const RESCalculatorView = ({ session, updateBalance, loggingOutHandler }) => {
   const navigator = useNavigate();

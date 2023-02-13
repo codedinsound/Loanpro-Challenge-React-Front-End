@@ -38,8 +38,6 @@ const LoginView = ({ loginHandler }) => {
       p: protectedPassword,
     };
 
-    console.log(41, credentials);
-
     const canNavigate: any = await loginHandler(credentials);
 
     if (canNavigate.invalid) {
