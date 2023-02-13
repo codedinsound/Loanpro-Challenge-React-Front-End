@@ -99,8 +99,7 @@ export default function App() {
       },
     });
 
-    let json = await res.json();
-
+    const json = await res.json();
     console.log('App', 102, json);
 
     if (!json.error) {
@@ -143,13 +142,8 @@ export default function App() {
           <Routes>
             <Route
               path="/"
-              element={<UserArithmeticRecordsView session={session} />}
-            />
-
-            {/* <Route
-              path="/"
               element={<LoginView loginHandler={loginHandler} />}
-            /> */}
+            />
             <Route
               path="/calculator"
               element={

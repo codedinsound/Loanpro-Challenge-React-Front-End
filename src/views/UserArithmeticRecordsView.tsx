@@ -15,10 +15,17 @@ import { AsyncTimer } from '../utils';
 const dummyRecords = [
   {
     id: '4-1',
+    operation_id: 'INIT',
+    date: new Date(),
+    amount: 92925,
+    user_balance: 92925,
+  },
+  {
+    id: '4-2',
     operation_id: 'ADD',
     date: new Date(),
-    amount: 1000,
-    user_balance: 100000,
+    amount: 5000,
+    user_balance: 97925,
   },
 ];
 // =====================================================================
@@ -27,19 +34,14 @@ const dummyRecords = [
 const UserArithmeticRecordsView = ({ session }) => {
   // Client State
   // =========================================
-  // const [recordsData, setRecordsData] = useState([]);
-
-  const [reRender, setRenderToggle] = useState(false);
-
-  const [recordsData, setRecordsData] = useState(dummyRecords);
-
+  const [recordsData, setRecordsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [recordsPerPage] = useState(2);
   const [searchTypeToggle, setSearchTypeToggle] = useState('btn-all');
   let [currentRecords, updateCurrentRecordsDisplay] = useState([]);
 
   const [showModal, toggleShowModal] = useState({
-    show: true,
+    show: false,
     record: {
       id: '',
       operation_id: '',
@@ -152,23 +154,36 @@ const UserArithmeticRecordsView = ({ session }) => {
     console.log(1, session);
     console.log(showModal);
 
+    // const body = JSON.stringify({
+    //   userID: session.userID,
+    //   sessionToken: session.sessionToken,
+    //   operation: 'DELETE_RECORD',
+    //   record: showModal.record,
+    // });
+
     const body = JSON.stringify({
-      userID: session.userID,
-      sessionToken: session.sessionToken,
+      userID: 4,
+      sessionToken: 'abc1',
       operation: 'DELETE_RECORD',
       record: showModal.record,
     });
 
-    // const awsResponse = await fetch(lambdaURLS.deleteRecordURL, {
-    //   method: 'DELETE',
-    //   body,
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
+    console.log(body);
 
-    // const json = await awsResponse.json();
-    // console.log(json);
+    const awsResponse = await fetch(lambdaURLS.deleteRecordURL, {
+      method: 'DELETE',
+      body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const json = await awsResponse.json();
+    const records = JSON.parse(json.body);
+
+    console.log('records', records);
+
+    setRecordsData(records);
 
     await AsyncTimer.sleep(10000);
 
