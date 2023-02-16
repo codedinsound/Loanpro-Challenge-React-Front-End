@@ -13,11 +13,10 @@ Square Root
 
 # To See the Backend AWS Logic
 
-"For more information, see the repository. https://stackblitz.com/edit/react-ts-wjmen9?file=README.md"
-
+"For more information, see the repository. https://stackblitz.com/edit/react-ts-dnw4z2
 # Application URL Without Stackblitz Code Editor Live Demo 
 
-"For more information, see the repository. https://react-ts-wjmen9.stackblitz.io"
+"For more information, see the repository. https://stackblitz.com/edit/react-ts-dnw4z2?file=README.md
 
 # Test RESful AWS Lambda Calculator use this account
 
